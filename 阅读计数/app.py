@@ -8,8 +8,8 @@ from urllib.parse import urlparse, parse_qs
 DB = "/srv/views/views.db"
 RATE_WINDOW = 600
 ALLOW = {
-    "https://zyx0407.com", "https://www.zyx0407.com",
-    "https://ajiu.zyx0407.com",
+    "https://example.com", "https://www.example.com",
+    "https://ajiu.yourname.com",
     "http://127.0.0.1:5199", "http://127.0.0.1:5187",
     "http://localhost:5199", "http://localhost:5187",
 }

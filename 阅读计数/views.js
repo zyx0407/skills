@@ -1,6 +1,6 @@
 /* 阅读计数（2026-11-04）：向自建接口取数/计数，失败就静默降级，不打断页面 */
 (function () {
-  var API = 'https://api.zyx0407.com/views';
+  var API = 'https://api.example.com/views';
 
   function paint(slug, n) {
     var els = document.querySelectorAll('[data-views="' + slug + '"]');
