@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>示例 · 本地小工具站</title>
+<!-- 通用示例（虚构产品）：三列结构 + 连线流动点 + ?still=1 静态导出 -->
+<style>
+  :root {
+    --bg: #f4efe6; --card: #fbf8f1;
+    --ink: #2b2926; --ink-2: #43403a; --muted: #5f5a4f;
+    --line: #d8cfbe; --wire: #9a8f7c; --accent: #b08a3e;
+    --mono: "Cascadia Mono", Consolas, "Noto Sans SC", monospace;
+    --sans: "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); }
+  body { font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  .canvas { position: relative; width: 1400px; height: 700px; }
+  svg.wires { position: absolute; inset: 0; width: 1400px; height: 700px; }
+  .flow circle { opacity: .95; }
+  @media (prefers-reduced-motion: reduce) { .flow { display: none; } }
+  .box { position: absolute; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; }
+  .box.dashed { border-style: dashed; border-color: var(--wire); background: transparent; }
+  .t { font-size: 14px; font-weight: 500; letter-spacing: .02em; }
+  .s { font-family: var(--mono); font-size: 10px; letter-spacing: .05em; color: var(--muted); margin-top: 4px; line-height: 1.7; }
+  .g { position: absolute; font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; color: var(--muted); }
+  .h1 { position: absolute; left: 40px; top: 20px; font-size: 15px; font-weight: 600; letter-spacing: .04em; }
+  .h1 span { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .08em; margin-left: 12px; }
+  .lbl { position: absolute; font-family: var(--mono); font-size: 9.5px; letter-spacing: .04em; color: var(--muted); }
+  .legend { position: absolute; left: 40px; bottom: 20px; display: flex; gap: 26px;
+            font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: var(--muted); }
+  .legend i { display: inline-block; width: 26px; height: 0; border-top: 1px solid var(--ink-2); margin-right: 8px; vertical-align: 4px; }
+  .legend .dash { border-top: 1px dashed var(--wire); }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <svg class="wires" viewBox="0 0 1400 700" fill="none">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#5b5448"/>
+      </marker>
+      <marker id="ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#9a8f7c"/>
+      </marker>
+    </defs>
+
+    <path id="p1" d="M380 240 H460" stroke="#5b5448" stroke-width="1" marker-end="url(#ar)"/>
+    <path id="p2" d="M980 240 H1060" stroke="#5b5448" stroke-width="1" marker-end="url(#ar)"/>
+    <path id="p3" d="M720 404 V500" stroke="#9a8f7c" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#ard)"/>
+
+    <g class="flow" aria-hidden="true">
+      <circle r="2.6" fill="#b08a3e"><animateMotion dur="3.6s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion></circle>
+      <circle r="2.2" fill="#b08a3e"><animateMotion dur="2.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion></circle>
+      <circle r="2.4" fill="#b08a3e"><animateMotion dur="3.2s" begin="0.6s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion></circle>
+    </g>
+  </svg>
+
+  <div class="h1">示例 · 本地小工具站<span>一个虚构产品 · 2026-10-31</span></div>
+
+  <div class="g" style="left:40px;top:62px;">外部 · 用户</div>
+  <div class="box" style="left:40px;top:96px;width:340px;height:70px;">
+    <div class="t">用户 / 访客</div>
+    <div class="s">打开即用 · 数据只留本机 · 不注册</div>
+  </div>
+  <div class="box" style="left:40px;top:190px;width:340px;height:70px;">
+    <div class="t">浏览器</div>
+    <div class="s">桌面 / 手机 · 断点自适应</div>
+  </div>
+  <div class="box dashed" style="left:40px;top:284px;width:340px;height:80px;">
+    <div class="t">入口</div>
+    <div class="s">收藏的链接 · 分享的链接</div>
+  </div>
+
+  <div class="g" style="left:460px;top:62px;">本体 · 纯静态单页</div>
+  <div class="box" style="left:460px;top:96px;width:520px;height:84px;">
+    <div class="t">index.html · app.js · style.css</div>
+    <div class="s">零依赖 / 零构建 / 无需后端</div>
+  </div>
+  <div class="box" style="left:460px;top:200px;width:160px;height:80px;"><div class="t">输入表单</div><div class="s">收集用户输入</div></div>
+  <div class="box" style="left:640px;top:200px;width:160px;height:80px;"><div class="t">本地计算</div><div class="s">浏览器内完成</div></div>
+  <div class="box" style="left:820px;top:200px;width:160px;height:80px;"><div class="t">导出结果</div><div class="s">下载文件 / 复制</div></div>
+  <div class="box" style="left:460px;top:296px;width:320px;height:80px;"><div class="t">本机存储</div><div class="s">localStorage · 清空即还原</div></div>
+  <div class="box" style="left:800px;top:296px;width:180px;height:80px;"><div class="t">主题 / 设置</div><div class="s">跟随系统深浅色</div></div>
+
+  <div class="g" style="left:1060px;top:62px;">数据 · 上线 · 运维</div>
+  <div class="box" style="left:1060px;top:96px;width:300px;height:96px;">
+    <div class="t">数据（只在本地）</div>
+    <div class="s">不上传 · 无账号 · 无追踪</div>
+  </div>
+  <div class="box" style="left:1060px;top:214px;width:300px;height:96px;">
+    <div class="t">发布链</div>
+    <div class="s">源码 → 静态托管 → 域名 / HTTPS</div>
+  </div>
+  <div class="box dashed" style="left:1060px;top:332px;width:300px;height:72px;">
+    <div class="t">运维</div>
+    <div class="s">无服务器 · 改完重新发布即可</div>
+  </div>
+
+  <div class="g" style="left:40px;top:462px;">边界 · 验收 · 现状</div>
+  <div class="box" style="left:40px;top:492px;width:380px;height:104px;">
+    <div class="t">边界</div>
+    <div class="s">不上传数据 · 不建账号 · 不存用户信息</div>
+  </div>
+  <div class="box" style="left:460px;top:492px;width:420px;height:104px;">
+    <div class="t">验收</div>
+    <div class="s">桌面 / 手机两边实测 · 空数据与满数据各跑一遍</div>
+  </div>
+  <div class="box" style="left:920px;top:492px;width:440px;height:104px;">
+    <div class="t">现状 / 下一步</div>
+    <div class="s">v1.0 已上线 · 下一步：加导入、加示例数据</div>
+  </div>
+
+  <div class="lbl" style="left:396px;top:226px;">打开页面</div>
+  <div class="lbl" style="left:1000px;top:226px;">读本地数据</div>
+  <div class="lbl" style="left:732px;top:452px;">自检</div>
+
+  <div class="legend">
+    <span><i></i>已落地 · 同步直连</span>
+    <span><i class="dash"></i>外部 / 计划 / 异步 / 只读</span>
+    <span>灰字＝这块在干什么 · 小点是"数据在跑"</span>
+  </div>
+</div>
+
+<script>
+  if (location.search.indexOf('still=1') >= 0) {
+    var f = document.querySelector('.flow');
+    if (f) f.style.display = 'none';
+  }
+</script>
+</body>
+</html>

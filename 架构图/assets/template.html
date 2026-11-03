@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>架构图模板</title>
+<!--
+  模板用法：
+  1. 复制本文件到项目目录，改 <title>、h1 的「主题 · 副题」与日期
+  2. 改列头 .g（左/中/右三列语义）
+  3. 复制 .box 块改坐标/文案：实线框＝已落地，虚线框＝外部/计划
+  4. 改 SVG 连线与 .lbl 标签（每条箭头必须有标签）
+  5. 出图：scripts\render.ps1 -Html 本文件
+  规矩全文：references\rules.md
+-->
+<style>
+  :root {
+    --bg: #f4efe6; --card: #fbf8f1;
+    --ink: #2b2926; --ink-2: #43403a; --muted: #5f5a4f;
+    --line: #d8cfbe; --wire: #9a8f7c; --accent: #b08a3e;
+    --mono: "Cascadia Mono", Consolas, "Noto Sans SC", monospace;
+    --sans: "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); }
+  body { font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  .canvas { position: relative; width: 1400px; height: 760px; }
+  svg.wires { position: absolute; inset: 0; width: 1400px; height: 760px; }
+  .box { position: absolute; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; }
+  .box.dashed { border-style: dashed; border-color: var(--wire); background: transparent; }
+  .t { font-size: 14px; font-weight: 500; letter-spacing: .02em; }
+  .s { font-family: var(--mono); font-size: 10px; letter-spacing: .05em; color: var(--muted); margin-top: 4px; line-height: 1.7; }
+  .g { position: absolute; font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; color: var(--muted); }
+  .h1 { position: absolute; left: 40px; top: 20px; font-size: 15px; font-weight: 600; letter-spacing: .04em; }
+  .h1 span { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .08em; margin-left: 12px; }
+  .lbl { position: absolute; font-family: var(--mono); font-size: 9.5px; letter-spacing: .04em; color: var(--muted); }
+  .legend { position: absolute; left: 40px; bottom: 20px; display: flex; gap: 26px;
+            font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: var(--muted); }
+  .legend i { display: inline-block; width: 26px; height: 0; border-top: 1px solid var(--ink-2); margin-right: 8px; vertical-align: 4px; }
+  .legend .dash { border-top: 1px dashed var(--wire); }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <svg class="wires" viewBox="0 0 1400 760" fill="none">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#5b5448"/>
+      </marker>
+      <marker id="ard" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#9a8f7c"/>
+      </marker>
+    </defs>
+
+    <!-- 外部 → 本体 -->
+    <path d="M380 180 H460" stroke="#5b5448" stroke-width="1" marker-end="url(#ar)"/>
+    <!-- 本体 → 数据 -->
+    <path d="M980 180 H1060" stroke="#5b5448" stroke-width="1" marker-end="url(#ar)"/>
+    <!-- 本体 → 发布（虚线） -->
+    <path d="M980 300 H1020 M1020 300 V262 H1060" stroke="#9a8f7c" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#ard)"/>
+    <!-- 底条：验收（虚线） -->
+    <path d="M720 404 V500" stroke="#9a8f7c" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#ard)"/>
+  </svg>
+
+  <div class="h1">主题 · 副题<span>副题补充 · 版本 · 日期</span></div>
+
+  <!-- 左：外部 / 用户 -->
+  <div class="g" style="left:40px;top:62px;">外部 · 用户</div>
+  <div class="box" style="left:40px;top:96px;width:340px;height:70px;">
+    <div class="t">用户 / 访客</div>
+    <div class="s">谁在用 · 他们想干什么（一句话）</div>
+  </div>
+  <div class="box" style="left:40px;top:190px;width:340px;height:70px;">
+    <div class="t">终端</div>
+    <div class="s">手机 / 桌面 · 断点或平台差异</div>
+  </div>
+  <div class="box dashed" style="left:40px;top:284px;width:340px;height:80px;">
+    <div class="t">入口（外部来源）</div>
+    <div class="s">从哪进来 · 链接 / 二维码 / 桌面图标</div>
+  </div>
+
+  <!-- 中：本体 -->
+  <div class="g" style="left:460px;top:62px;">本体 · 核心模块</div>
+  <div class="box" style="left:460px;top:96px;width:520px;height:84px;">
+    <div class="t">模块总名 · 形态（单页 / 服务 / 脚本）</div>
+    <div class="s">技术选型 · 依赖 · 关键约束（零依赖 / 只读 / 常驻…）</div>
+  </div>
+  <div class="box" style="left:460px;top:214px;width:160px;height:88px;"><div class="t">模块 1</div><div class="s">干什么</div></div>
+  <div class="box" style="left:640px;top:214px;width:160px;height:88px;"><div class="t">模块 2</div><div class="s">干什么</div></div>
+  <div class="box" style="left:820px;top:214px;width:160px;height:88px;"><div class="t">模块 3</div><div class="s">干什么</div></div>
+  <div class="box" style="left:460px;top:316px;width:160px;height:88px;"><div class="t">模块 4</div><div class="s">干什么</div></div>
+  <div class="box" style="left:640px;top:316px;width:160px;height:88px;"><div class="t">模块 5</div><div class="s">干什么</div></div>
+  <div class="box" style="left:820px;top:316px;width:160px;height:88px;"><div class="t">模块 6</div><div class="s">干什么</div></div>
+
+  <!-- 右：数据 / 上线 / 运维 -->
+  <div class="g" style="left:1060px;top:62px;">数据 · 上线 · 运维</div>
+  <div class="box" style="left:1060px;top:96px;width:300px;height:96px;">
+    <div class="t">数据 / 配置（真源）</div>
+    <div class="s">存在哪 · 口径 · 更新方式</div>
+  </div>
+  <div class="box" style="left:1060px;top:214px;width:300px;height:96px;">
+    <div class="t">发布链</div>
+    <div class="s">源 → 仓库 → 托管 → 域名 / 证书</div>
+  </div>
+  <div class="box dashed" style="left:1060px;top:332px;width:300px;height:72px;">
+    <div class="t">运维 / 定时任务</div>
+    <div class="s">谁在跑 · 频率 · 只报告还是可改数据</div>
+  </div>
+
+  <!-- 底条 -->
+  <div class="g" style="left:40px;top:462px;">边界 · 验收 · 现状</div>
+  <div class="box" style="left:40px;top:492px;width:380px;height:104px;">
+    <div class="t">边界 / 白名单</div>
+    <div class="s">哪些能出去 · 哪些永不上公网</div>
+  </div>
+  <div class="box" style="left:460px;top:492px;width:420px;height:104px;">
+    <div class="t">验收</div>
+    <div class="s">怎么算通过 · 几项检查 · 全绿才推</div>
+  </div>
+  <div class="box" style="left:920px;top:492px;width:440px;height:104px;">
+    <div class="t">现状 / 下一步</div>
+    <div class="s">当前版本 · 上线时间 · 接下来做什么</div>
+  </div>
+
+  <!-- 连线标签 -->
+  <div class="lbl" style="left:396px;top:168px;">直接访问</div>
+  <div class="lbl" style="left:1000px;top:126px;">读数据</div>
+  <div class="lbl" style="left:1006px;top:288px;">发布 / 定时</div>
+  <div class="lbl" style="left:732px;top:452px;">验收</div>
+
+  <div class="legend">
+    <span><i></i>已落地 · 同步直连</span>
+    <span><i class="dash"></i>外部 / 计划 / 异步 / 只读</span>
+    <span>灰字＝这块在干什么</span>
+  </div>
+</div>
+</body>
+</html>
