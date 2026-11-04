@@ -1,5 +1,7 @@
 # 技能库 · Skills
 
+[English](README.en.md) · 简体中文
+
 把日常真在用的工具抽成「拿走就能跑」的 skill：一个目录一款，带说明、带脚本。
 
 仓库地址：<https://github.com/zyx0407/skills>
@@ -33,4 +35,4 @@ python 截图/shot.py --url "http://127.0.0.1:8080/" --out cover.png --w 1440 --
 
 ## 许可
 
-代码可自由取用；文中的个人信息、域名、截图仅作示例，替换成你自己的。
+[MIT](LICENSE)。文中的个人信息、域名、截图仅作示例，替换成你自己的。
